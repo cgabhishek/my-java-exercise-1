@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface DashboardService {
 
-    public List<Card> getCardByTag(String tag);
+    List<Card> getCardByTag(String tag);
 
     Object getAllCard();
 
@@ -24,4 +24,6 @@ public interface DashboardService {
     Object getCardByTime(String time);
 
     Object getCardByUser(Integer userId);
+
+    Card updateCard(Card card);
 }
