@@ -1,7 +1,10 @@
 package com.sb3.poc.sb3project.controller;
 
 import com.sb3.poc.sb3project.dto.Card;
+import com.sb3.poc.sb3project.dto.CardLabel;
+import com.sb3.poc.sb3project.service.DashboardService;
 import jakarta.websocket.server.PathParam;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,43 +19,41 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/dashboard/v1")
+@AllArgsConstructor
 public class DashBoardController {
 
     private final DashboardService dashboardService;
 
-    Map<Integer, Card> cardMap = new HashMap<>();
-
-
     @GetMapping()
     public ResponseEntity getDashBoard() {
-        return ResponseEntity.ok(cardMap);
+        return ResponseEntity.ok(dashboardService.getAllCard());
     }
 
     @PostMapping("/card")
     public ResponseEntity createCard(@RequestBody Card card) {
-        cardMap.put(card.getId(), card);
+        dashboardService.createCard(card);
         return ResponseEntity.ok("Card is created successfully");
 
     }
 
-    @GetMapping
-    ResponseEntity getAllCardWithTag() {
-        return null;
+    @GetMapping("/card/tag")
+    ResponseEntity getAllCardWithTag(@RequestParam String tag) {
+        return ResponseEntity.ok(dashboardService.getCardByTag(tag));
     }
 
-    @GetMapping
-    ResponseEntity getAllCardWithVColumn() {
-        return null;
+    @GetMapping("/card/column")
+    ResponseEntity getAllCardWithColumn(CardLabel cardLabel) {
+        return ResponseEntity.ok(dashboardService.getCardByColumn(cardLabel));
     }
 
-    @GetMapping("/{time}")
+    @GetMapping("/card/{time}")
     ResponseEntity getAllCardWithTimeStamp(@RequestParam String time) {
-        return null;
+        return ResponseEntity.ok(dashboardService.getCardByTime(time));
     }
 
-    @GetMapping("/{userId}")
-    ResponseEntity getAllCardWithUser(@PathVariable String userId) {
-        return null;
+    @GetMapping("/card/{userId}")
+    ResponseEntity getAllCardWithUser(@PathVariable Integer userId) {
+        return ResponseEntity.ok(dashboardService.getCardByUser(userId));
     }
 
 }
