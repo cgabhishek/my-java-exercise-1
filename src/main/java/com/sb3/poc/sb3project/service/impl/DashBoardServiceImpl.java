@@ -1,4 +1,4 @@
-package com.sb3.poc.sb3project.controller.impl;
+package com.sb3.poc.sb3project.service.impl;
 
 import com.sb3.poc.sb3project.dto.Card;
 import com.sb3.poc.sb3project.dto.CardLabel;
